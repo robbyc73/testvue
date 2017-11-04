@@ -5,20 +5,71 @@
 </head>
 <body>
 <div id="app">
- {{ sometest }}
- {{ sometest }}
+ {{ $data }}
+  <div v-for="plan in plans">
+   <plan :plan="plan" :active.sync="active"></plan>
+  </div>
+
 </div>
+
+<template id="plan-template">
+ <div>
+  <span>{{ plan.title }}</span>
+  <span>${{ plan.rate }}/Month</span>
+  <button @click="setActivePlan">{{ isUpgrade  ? 'Upgrade' : 'Downgrade'}}</button>
+
+ </div>
+</template>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.js"></script>
 <script>
+
     new Vue({
         el: '#app',
         data: {
-           sometest: 1
-        },
-        methods: {
+           plans: [
+               {
+               title: 'Enterprise',
+               rate: 100
+              },
+              {
+               title : 'Professional',
+               rate: 70
+              },
+              {
+               title: 'Starter',
+               rate: 30
+              },
+              {
+               title: 'Free',
+               rate: 0
+              }
 
-        }
+           ],
+            active: function () {
+                return this.plans[3];
+            }
+
+        },
+        components: {
+            plan: {
+                template: '#plan-template',
+                props: ['plan','active'],
+                methods: {
+                    setActivePlan: function() {
+                        this.active = this.plan;
+                    }
+                },
+
+                computed: {
+                    isUpgrade: function() {
+                        return this.active.rate > this.plan.rate
+                    }
+                }
+            },
+
+        },
+
     })
 </script>
 </body>
