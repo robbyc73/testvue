@@ -22,55 +22,7 @@
 </template>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.js"></script>
-<script>
+<script src="main.js"></script>
 
-    new Vue({
-        el: '#app',
-        data: {
-           plans: [
-               {
-               title: 'Enterprise',
-               rate: 100
-              },
-              {
-               title : 'Professional',
-               rate: 70
-              },
-              {
-               title: 'Starter',
-               rate: 30
-              },
-              {
-               title: 'Free',
-               rate: 0
-              }
-
-           ],
-            active: function () {
-                return this.plans[3];
-            }
-
-        },
-        components: {
-            plan: {
-                template: '#plan-template',
-                props: ['plan','active'],
-                methods: {
-                    setActivePlan: function() {
-                        this.active = this.plan;
-                    }
-                },
-
-                computed: {
-                    isUpgrade: function() {
-                        return this.active.rate > this.plan.rate
-                    }
-                }
-            },
-
-        },
-
-    })
-</script>
 </body>
 </html>
